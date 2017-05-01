@@ -4,6 +4,7 @@ set -eu
 # ライブラリスクリプトを読み込む
 . ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/dry_run.sh
 . ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/is_installed.sh
+. ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/is_installed_yum.sh
 
 function usage() {
   cat <<EOF 1>&2
@@ -37,8 +38,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # 環境に `yum` を使って lua-devel がインストールされていなければインストールする
-is_installed lua-devel
-if [[ $? -ne 0 ]]; then
+is_installed_yum lua-devel
+if [[ $? -eq 0 ]]; then
   ${dryrun} sudo yum -y install lua-devel 
 fi
 
