@@ -29,11 +29,10 @@ do
   esac
 done
 
-
 # 環境に Vim がインストールされている場合は Vim 関連の install.sh は実行しない
 is_installed vim
 if [[ $? -ne 0 ]]; then
-  ${dryrun} find etc/install/ -type d -name "01*" | sort | xargs -i sh {}/install.sh
+  ${dryrun} find ${DOTVIM}/etc/install/ -type d -name "01*" | sort | xargs -i sh {}/install.sh
 fi
 
 exit 0
