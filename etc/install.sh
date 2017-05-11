@@ -32,4 +32,6 @@ done
 # 環境に Vim がインストールされている場合は Vim 関連の install.sh は実行しない
 is_installed vim || find ${DOTVIM}/etc/install/ -type d -name "01*" | sort | xargs -i ${dryrun} sh {}/install.sh
 
+find ${DOTVIM}/etc/install/ -type d -name "02*" | sort | xargs -i ${dryrun} sh {}/install.sh
+
 exit 0
