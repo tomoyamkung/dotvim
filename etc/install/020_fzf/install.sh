@@ -48,5 +48,5 @@ ${dryrun} create_dir ${FZF_INSTALL_DIRECTORY}
 
 # GitHub からプロジェクトを clone してインストールスクリプトを実行する
 ${dryrun} git clone --depth 1 https://github.com/junegunn/fzf.git ${FZF_INSTALL_DIRECTORY}
-${dryrun} sh ${FZF_INSTALL_DIRECTORY}/install
+${dryrun} sh ${FZF_INSTALL_DIRECTORY}/install --all
 exit 0
