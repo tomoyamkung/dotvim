@@ -40,7 +40,7 @@ grep -q "${FZF_INSTALL_DIRECTORY}" ~/.vimrc && exit 0
 # ~/.vimrc に設定する内容
 setting=$(cat << EOS
 
-# FZF
+" FZF
 set rtp+=${FZF_INSTALL_DIRECTORY}
 EOS
 )
