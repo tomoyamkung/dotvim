@@ -29,9 +29,8 @@ do
   esac
 done
 
-# 環境に Vim がインストールされている場合は Vim 関連の install.sh は実行しない
-is_installed vim || find ${DOTVIM}/etc/install/ -type d -name "01*" | sort | xargs -i ${dryrun} sh {}/install.sh
-
-find ${DOTVIM}/etc/install/ -type d -name "02*" | sort | xargs -i ${dryrun} sh {}/install.sh
+# このスクリプト内で各 install.sh の実行制御は行わない
+# 各スクリプトで実行制御する
+find ${DOTVIM}/etc/install/ -type f -name "install.sh" | sort | xargs -i ${dryrun} sh {}
 
 exit 0
