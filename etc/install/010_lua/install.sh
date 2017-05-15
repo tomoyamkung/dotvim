@@ -30,6 +30,9 @@ do
   esac
 done
 
+# 環境に Vim がインストールされている場合は終了する
+# lua を有効にした Vim をインストールするために lua をインストールするので、Vim がインストールされていなければ処理を終了する
+is_installed vim && exit 1
 
 # 環境に `yum` を使って lua がインストールされていなければインストールする
 is_installed lua

@@ -30,6 +30,10 @@ do
 done
 
 
+# 環境に Vim がインストールされている場合は終了する
+# Vim のインストールに不可欠なのでインストールするが、そもそも Vim がインストールされていなければ処理を終了する
+is_installed vim && exit 1
+
 # 環境に `yum` を使って ncurses-devel がインストールされていなければインストールする
 is_installed_yum ncurses-devel
 if [[ $? -eq 0 ]]; then

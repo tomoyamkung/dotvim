@@ -30,6 +30,10 @@ do
 done
 
 
+# 環境に Vim がインストールされている場合は終了する
+# Python を有効にした Vim をインストールするために Python をインストールするので、Vim がインストールされていなければ処理を終了する
+is_installed vim && exit 1
+
 # 環境に `yum` を使って python-devel がインストールされていなければインストールする
 is_installed_yum python-devel
 if [[ $? -eq 0 ]]; then
