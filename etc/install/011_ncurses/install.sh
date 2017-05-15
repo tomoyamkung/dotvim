@@ -3,6 +3,7 @@ set -eu
 
 # ライブラリスクリプトを読み込む
 . ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/dry_run.sh
+. ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/is_installed.sh
 . ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/is_installed_yum.sh
 
 function usage() {
