@@ -48,6 +48,7 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 set tabstop=4 
+set expandtab
 set shiftwidth=4
 set autoindent
 set smartindent
