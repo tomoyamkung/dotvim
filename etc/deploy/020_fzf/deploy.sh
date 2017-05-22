@@ -3,6 +3,7 @@ set -eu
 
 # ライブラリスクリプトを読み込む
 . ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/dry_run.sh
+. ${DOTVIM?"export DOTVIM=~/dotvim"}/bin/lib/is_installed.sh
 
 function usage() {
   cat <<EOF 1>&2
@@ -37,15 +38,31 @@ done
 # ~/.vimrc に FZF の設定がある場合は処理を終了する
 grep -q "${FZF_INSTALL_DIRECTORY}" ~/.vimrc && exit 0
 
-# ~/.vimrc に設定する内容
+
+# FZF のインストールディレクトリを確認する
+path=""
+if [[ -d ${FZF_INSTALL_DIRECTORY} ]]; then
+  # このプロジェクトのインストールスクリプトを使用して FZF をインストールした場合
+  path="${FZF_INSTALL_DIRECTORY}"
+elif [[ $(is_installed fzf; echo $?) == 0 ]]; then
+  # 別の方法で FZF をインストールした場合
+  path="$(type fzf | awk '{print $3}' | sed -e 's#/bin/fzf##')"
+else
+  # FZF がインストールされていない、もしくは PATH が通っていない場合は処理を終了する
+  echo "fzf is not installed or is not found"
+  exit 1
+fi
+
+# ~/.vimrc への設定内容
 setting=$(cat << EOS
 
 " FZF
-set rtp+=${FZF_INSTALL_DIRECTORY}
+set rtp+=${path}
 EOS
 )
+
 # ~/.vimrc に FZF の設定を追記する
-if [ ! -z ${dryrun} ]; then
+if [[ ! -z ${dryrun} ]]; then
   echo "${setting} >> ~/.vimrc"
 else
   echo "${setting}" >> ~/.vimrc
