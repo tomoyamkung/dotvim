@@ -57,7 +57,51 @@ fi
 setting=$(cat << EOS
 
 " FZF
+" Vim と FZF を連携するために FZF のインタプリタをランタイムパスに追加する
 set rtp+=${path}
+
+" FZF 関連コマンドのキーバインド
+" 「スペース + f」をキーバインドのプレフィックスに設定する
+nnoremap [FZF] <Nop>
+nmap <Space>f [FZF]
+
+" バッファの一覧を取得する
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+" バッファを開く
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+" FZF を使ってバッファを絞り込む
+nnoremap <silent>[FZF]<Enter> :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
+
+" 最近使用したファイル・バッファの一覧を取得する
+function! s:all_files()
+  return extend(
+  \ filter(copy(v:oldfiles),
+  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+endfunction
+
+" FZF を使って最近使用したファイル・バッファを絞り込む
+" prefix + f で発動
+nnoremap <silent>[FZF]f :call fzf#run({
+\  'source':  reverse(<sid>all_files()),
+\  'sink':    'edit',
+\  'options': '-m -x +s',
+\  'down':    '40%'
+\ })<CR>
 EOS
 )
 
