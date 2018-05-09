@@ -27,8 +27,7 @@ do
 done
 
 # 環境に FZF がインストールされている場合は処理を終了する
-type fzf > /dev/null
-if [[ $? = 0 ]]; then
+if [[ $(type fzf) ]]; then
   exit 1
 fi
 
