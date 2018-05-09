@@ -64,13 +64,17 @@ clone_colorscheme_dir=~/.vim_colorscheme
 if [[ ! -d "${clone_colorscheme_dir}" ]]; then
   mkdir "${clone_colorscheme_dir}"
 fi
-
 # Vitamins
 vitamins=vim-vitamins
 if [[ ! -d "${clone_colorscheme_dir}"/"${vitamins}" ]]; then
   git clone https://github.com/fmoralesc/vim-vitamins.git "${clone_colorscheme_dir}"/"${vitamins}"
 fi
 cp "${clone_colorscheme_dir}"/"${vitamins}"/colors/vitamins.vim "${vim_colors_dir}"/
-
+# iceberg
+iceberg=iceberg
+if [[ ! -d "${clone_colorscheme_dir}"/"${iceberg}" ]]; then
+  git clone https://github.com/cocopon/iceberg.vim.git "${clone_colorscheme_dir}"/"${iceberg}"
+fi
+cp "${clone_colorscheme_dir}"/"${iceberg}"/colors/iceberg.vim "${vim_colors_dir}"/
 
 exit 0
