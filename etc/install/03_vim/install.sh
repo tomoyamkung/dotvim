@@ -54,4 +54,23 @@ sudo ./configure --enable-fail-if-missing --prefix=/usr/local/ --with-features=h
 sudo make
 sudo make install
 
+# Vim のカラースキームをインストールする
+cd ~/
+vim_colors_dir=~/.vim/colors
+if [[ ! -d "${vim_colors_dir}" ]]; then
+  mkdir -p "${vim_colors_dir}"
+fi
+clone_colorscheme_dir=~/.vim_colorscheme
+if [[ ! -d "${clone_colorscheme_dir}" ]]; then
+  mkdir "${clone_colorscheme_dir}"
+fi
+
+# Vitamins
+vitamins=vim-vitamins
+if [[ ! -d "${clone_colorscheme_dir}"/"${vitamins}" ]]; then
+  git clone https://github.com/fmoralesc/vim-vitamins.git "${clone_colorscheme_dir}"/"${vitamins}"
+fi
+cp "${clone_colorscheme_dir}"/"${vitamins}"/colors/vitamins.vim "${vim_colors_dir}"/
+
+
 exit 0
