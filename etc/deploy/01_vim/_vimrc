@@ -1,0 +1,192 @@
+" Leader をスペースに変更する
+let mapleader = "\<Space>"
+
+" 文字コードの設定
+set encoding=utf-8
+" 保存時の文字コード
+set fileencoding=utf-8
+" 読み込み時の文字コードの自動判別. 左側が優先される
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932
+" 改行コードの自動判別. 左側が優先される
+set fileformats=unix,dos,mac
+" 全角文字が崩れる問題を解決
+set ambiwidth=double
+" 長いテキストの折り返し
+set wrap
+
+" バックアップの無効化
+set nobackup
+" バックアップファイルの無効化
+set nowritebackup
+" スワップファイルの無効化
+set noswapfile
+
+" 対応する括弧の強調
+set showmatch
+" 対応する括弧に <, > を追加
+set matchpairs& matchpairs+=<:>
+" TABにて対応ペアにジャンプ
+nnoremap <Tab> %
+vnoremap <Tab> %
+" 行が折り返し表示されていた場合、行単位ではなく表示行単位でカーソルを移動する
+nnoremap j gj
+nnoremap k gk
+nnoremap <down> gj
+nnoremap <up> gk
+
+" タブを複数のスペースに置き換える
+set expandtab
+" タブ幅
+set tabstop=4
+" 自動でインデントする
+set autoindent
+set smartindent
+" 行頭でのタブ幅
+set shiftwidth=4
+
+" 検索キーワードをハイライト表示
+set hlsearch
+" インクリメンタルサーチ
+set incsearch
+" 末尾まで検索したら先頭から検索する
+set wrapscan
+" 検索時に大文字と小文字の区別をしない
+set ignorecase
+" 検索語に大文字が含まれている場合は区別する
+set smartcase
+" ESCを二回押すことでハイライトを消す
+nmap <silent> <Esc><Esc> :nohlsearch<CR>
+
+" コマンドモードの補完
+set wildmenu
+" 保存するコマンド履歴の数
+set history=2000
+
+" 新しく開く代わりにすでに開いてあるバッファを開く
+set switchbuf=useopen
+" ファイルが未保存の場合でもバッファの切り替えを有効にする
+set hidden
+
+" カーソル下の単語をハイライトする
+nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
+
+"" Buffer {{{
+" プレフィックスキーの変更（space + b に割り当て）
+nnoremap [buffer] <Nop>
+nmap <Space>b [buffer]
+" 直前に開いていたバッファを開く
+nnoremap <silent>[buffer]b :<C-u>b#<CR>
+" バッファリストを開く
+nnoremap <silent>[buffer]l :<C-u>ls<CR>
+" バッファ番号での移動を簡略化する（`ls` でバッファリストを表示 →  `b NUM` で移動）
+nnoremap <silent>[buffer]m :ls<CR>:buf
+"}}}
+
+"vimgrep + quickfix-window {{{
+" :vim[grep] での検索結果を自動的に quickfix-window で表示する
+autocmd QuickFixCmdPost *grep* cwindow
+" プレフィックスキーの変更（space + g に割り当て）
+nnoremap [vimgrepquickfix] <Nop>
+nmap <Space>g [vimgrepquickfix]
+" 次の検索結果に移動する
+nnoremap <silent>[vimgrepquickfix]n :cnext<CR>
+" 前の検索結果に移動する
+nnoremap <silent>[vimgrepquickfix]p :cprevious<CR>
+" 先頭の検索結果に移動する
+nnoremap <silent>[vimgrepquickfix]N :<C-u>cfirst<CR>
+" 末尾の検索結果に移動する
+nnoremap <silent>[vimgrepquickfix]P :<C-u>clast<CR>
+"}}}
+
+" dein.vim {{{
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+
+  let g:rc_dir    = expand('~/.vim/rc')
+  let s:toml      = g:rc_dir . '/dein.toml'
+  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+
+  call dein#load_toml(s:toml,      {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+
+  call dein#end()
+  call dein#save_state()
+endif
+if dein#check_install()
+  call dein#install()
+endif
+"}}}
+
+" 構文に色を付ける
+" dein の設定よりも後ろに記述しないと有効にならない
+set t_Co=256
+syntax enable
+
+" molokai
+" dein の設定よりも後ろに記述しないと有効にならない
+if dein#tap('molokai')
+  colorscheme molokai
+endif
+
+
+" lightline.vim
+if dein#tap('lightline.vim')
+  " ステータスラインを常に表示
+  set laststatus=2
+  " 現在のモードを表示
+  set showmode
+  " 打ったコマンドをステータスラインの下に表示
+  set showcmd
+  " ステータスラインの右側にカーソルの現在位置を表示する
+  set ruler
+endif
+
+if dein#tap('neocomplete.vim')
+  " Vim起動時にneocompleteを有効にする
+  let g:neocomplete#enable_at_startup = 1
+  " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
+  let g:neocomplete#enable_smart_case = 1
+  " 3文字以上の単語に対して補完を有効にする
+  let g:neocomplete#min_keyword_length = 3
+  " 区切り文字まで補完する
+  let g:neocomplete#enable_auto_delimiter = 1
+  " 1文字目の入力から補完のポップアップを表示
+  let g:neocomplete#auto_completion_start_length = 1
+  " バックスペースで補完のポップアップを閉じる
+  inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
+
+  " エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
+  imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
+  " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
+  imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
+endif
+
+if dein#tap('vim-easymotion')
+  let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+  " `s{char}{char}{label}`
+  " Need one more keystroke, but on average, it may be more comfortable.
+  nmap s <Plug>(easymotion-overwin-f2)
+
+  " Turn on case insensitive feature
+  let g:EasyMotion_smartcase = 1
+
+  " JK motions: Line motions
+  map <Leader>j <Plug>(easymotion-j)
+  map <Leader>k <Plug>(easymotion-k)
+endif
+
+if dein#tap('ack.vim')
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+  noremap <Leader>a :Ack!<Space>
+endif
+
+
