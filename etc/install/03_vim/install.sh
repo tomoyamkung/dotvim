@@ -47,7 +47,7 @@ fi
 # インストールディレクトリに移動して Vim をインストールする
 cd /usr/local/
 if [[ ! -d vim ]]; then
-  git clone https://github.com/vim/vim.git
+  sudo git clone https://github.com/vim/vim.git
 fi
 cd vim
 sudo ./configure --enable-fail-if-missing --prefix=/usr/local/ --with-features=huge --disable-selinux --enable-cscope --enable-multibyte --enable-luainterp --enable-pythoninterp=dynamic
