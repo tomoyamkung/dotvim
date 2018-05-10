@@ -1,0 +1,3 @@
+[submodule "dotsubmodule"]
+	path = dotsubmodule
+	url = https://github.com/tomoyamkung/dotsubmodule.git
