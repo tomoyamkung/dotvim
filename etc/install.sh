@@ -4,7 +4,9 @@ set -eu
 function usage() {
   cat <<EOF 1>&2
 Description:
-  $(basename ${0}) は etc/install/**/install.sh を一括して実行するスクリプトである。
+  $(basename ${0}) は以下を一括して実行するスクリプトである。
+  1. dotsubmodule/lib/fzf/install.sh
+  2. etc/install/**/install.sh
 
 Usage:
   $(basename ${0}) [-h]
@@ -23,6 +25,7 @@ do
   esac
 done
 
+${DOTVIM?"export DOTVIM=~/dotvim"}/dotsubmodule/lib/fzf/install.sh
 find ${DOTVIM?"export DOTVIM=~/dotvim"}/etc/install/ -type f -name "install.sh" | sort | xargs -i sh {}
 
 exit 0
