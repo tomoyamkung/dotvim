@@ -67,6 +67,14 @@ set switchbuf=useopen
 " ファイルが未保存の場合でもバッファの切り替えを有効にする
 set hidden
 
+" 日本語表示関係
+" 全角文字で曖昧幅なものは全角幅とする
+set ambiwidth=double
+" 日本語(マルチバイト文字)行の連結時には空白を入力しない
+set formatoptions+=mM
+" 画面最後の行をできる限り表示する
+set display+=lastline
+
 " カーソル下の単語をハイライトする
 nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
 
