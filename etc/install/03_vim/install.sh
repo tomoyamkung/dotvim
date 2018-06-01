@@ -74,6 +74,11 @@ iceberg=iceberg
 if [[ ! -d "${clone_colorscheme_dir}"/"${iceberg}" ]]; then
   git clone https://github.com/cocopon/iceberg.vim.git "${clone_colorscheme_dir}"/"${iceberg}"
 fi
+# papercolor-theme
+papercolor=papercolor-theme
+if [[ ! -d "${clone_colorscheme_dir}"/"${papercolor}" ]]; then
+  git clone https://github.com/NLKNguyen/papercolor-theme.git "${clone_colorscheme_dir}"/"${papercolor}"
+fi
 find "${clone_colorscheme_dir}"/*/colors/ -type f -name "*.vim" | xargs -i cp {} "${vim_colors_dir}"/
 
 exit 0
