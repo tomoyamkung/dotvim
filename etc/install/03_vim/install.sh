@@ -79,6 +79,11 @@ papercolor=papercolor-theme
 if [[ ! -d "${clone_colorscheme_dir}"/"${papercolor}" ]]; then
   git clone https://github.com/NLKNguyen/papercolor-theme.git "${clone_colorscheme_dir}"/"${papercolor}"
 fi
+# vim-colors-solarized
+solarized=vim-colors-solarized
+if [[ ! -d "${clone_colorscheme_dir}"/"${solarized}" ]]; then
+  git clone https://github.com/altercation/vim-colors-solarized.git "${clone_colorscheme_dir}"/"${solarized}"
+fi
 find "${clone_colorscheme_dir}"/*/colors/ -type f -name "*.vim" | xargs -i cp {} "${vim_colors_dir}"/
 
 exit 0
