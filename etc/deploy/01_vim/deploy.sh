@@ -35,15 +35,11 @@ fi
 
 dir_rc=~/.vim/rc/
 if [[ ! -d ${dir_rc} ]]; then
-  mkdir ${dir_rc}
+  mkdir -p ${dir_rc}
 fi
-cp ${DOTVIM?"export DOTVIM=~/dotvim"}/etc/deploy/01_vim/dein.toml ${dir_rc}
-cp ${DOTVIM}/etc/deploy/01_vim/dein_lazy.toml ${dir_rc}
+cp ${DOTVIM?"export DOTVIM=~/dotvim"}/etc/deploy/01_vim/dein{,_lazy}.toml ${dir_rc}
 
 vimrc=~/.vimrc
-if [[ -f ${vimrc} ]]; then
-  rm -f ${vimrc}
-fi
 cp ${DOTVIM}/etc/deploy/01_vim/_vimrc ${vimrc}
 
 exit 0
