@@ -25,7 +25,8 @@ do
   esac
 done
 
-${DOTVIM?"export DOTVIM=~/dotvim"}/dotsubmodule/lib/fzf/install.sh
+export DOTVIM=~/dotvim
+find "${DOTVIM}"/dotsubmodule/ -type f -name "install.sh" | xargs -i sh {}
 find ${DOTVIM?"export DOTVIM=~/dotvim"}/etc/install/ -type f -name "install.sh" | sort | xargs -i sh {}
 
 exit 0
