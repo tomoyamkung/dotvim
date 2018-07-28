@@ -34,15 +34,25 @@ nnoremap k gk
 nnoremap <down> gj
 nnoremap <up> gk
 
-" タブを複数のスペースに置き換える
-set expandtab
-" タブ幅
-set tabstop=4
-" 自動でインデントする
+"" インデント・タブ {{{
+" 改行したときに自動でインデントする
 set autoindent
-set smartindent
-" 行頭でのタブ幅
+" タブをスペースに置き換える
+set expandtab
+" autoindent でのタブ幅
 set shiftwidth=4
+" 波括弧の後ろで改行すると自動でインデントを下げる
+set smartindent
+" スペース4つを一気に削除する
+set softtabstop=4
+" タブ幅をスペース4つとする
+set tabstop=4
+
+augroup fileTypeIndent
+  autocmd!
+  autocmd BufNewFile,BufRead *.sh setlocal tabstop=2 softtabstop=2 shiftwidth=2  " ファイルの拡張子が sh の場合はインデント幅を2にする
+augroup END
+"" }}}
 
 " 検索キーワードをハイライト表示
 set hlsearch
